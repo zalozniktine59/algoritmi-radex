@@ -1,0 +1,3 @@
+D:/Sola/2.letnik/2.SEMESTER/SISTEMSKA_ADMINISTRACIJA/DN1/cmake-build-debug/CMakeFiles/DN1.dir
+D:/Sola/2.letnik/2.SEMESTER/SISTEMSKA_ADMINISTRACIJA/DN1/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Sola/2.letnik/2.SEMESTER/SISTEMSKA_ADMINISTRACIJA/DN1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
