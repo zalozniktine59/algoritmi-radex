@@ -60,8 +60,8 @@ std::vector<int> radixSort(std::vector<unsigned char>myVector, int (*binaryArray
                          [](const std::pair<int, int>& a, const std::pair<int, int>& b) {
                              return a.first < b.first;
                          });
-        print2DArray(size,8,binaryArray);
-        cout<<endl;
+        //print2DArray(size,8,binaryArray);
+        //cout<<endl;
         for(int o=0;o<size;o++) {
             for (int p=0; p<8; p++) {
                 binaryArrayTemp[o][p] = binaryArray[vec[o].second][p];
@@ -77,6 +77,14 @@ std::vector<int> radixSort(std::vector<unsigned char>myVector, int (*binaryArray
         //cout<<"\n";
         //print2DArray(4,8,binaryArrayTemp);
     }
+    for (int i = 0; i < size; i++) {
+        //pretvorim v decimalno
+        int decimal = binaryToDecimal(binaryArray[i], 8);
+        //shranim v vektor
+        decimalVector.push_back(decimal);
+    }
+
+    return decimalVector;
 }
 
 int main() {
@@ -87,7 +95,10 @@ int main() {
     std::vector<int> binaryNumberVector(8,0);
     fillBinaryVector(myVector,binaryArray,binaryNumberVector);
 
-    radixSort(myVector,binaryArray);
+    std::vector<int> sorted = radixSort(myVector,binaryArray);
+    for (int i=0; i<sorted.size(); i++) {
+        cout<<sorted[i]<<",";
+    }
     /*
     std::vector<int> binary;
     numToBinary(10, binary);
