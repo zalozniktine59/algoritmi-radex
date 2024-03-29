@@ -39,17 +39,41 @@ void fillBinaryVector(const std::vector<unsigned char>myVector, int (*binaryArra
 }
 
 std::vector<int> radixSort(std::vector<unsigned char>myVector, int (*binaryArray)[8]){
+    int size = myVector.size();
+    std::vector<std::pair<int, int>> vec;
 
+    for(int i=0;i<8;i++){
+        for(int j=0;j<size;j++){
+            vec.push_back(std::make_pair(binaryArray[j][i],j));
+
+        }
+        std::stable_sort(vec.begin(), vec.end(),
+                         [](const std::pair<int, int>& a, const std::pair<int, int>& b) {
+                             return a.first < b.first;
+                         });
+        print2DArray(size,8,binaryArray);
+        cout<<endl;
+        for(int o=0;o<size;o++) {
+            for (int p = 0; p < 8; p++) {
+                binaryArray[o][p] = binaryArray[vec[o].second][p];
+            }
+        }
+        vec.clear();
+
+        //cout<<"\n";
+        //print2DArray(4,8,binaryArrayTemp);
+    }
 }
 
 int main() {
     std::vector<unsigned char> myVector;
-    myVector = {4,5,1,3,9};
+    myVector = {14,5,2,12};
     int size=5;
     int binaryArray[size][8];
     std::vector<int> binaryNumberVector(8,0);
     fillBinaryVector(myVector,binaryArray,binaryNumberVector);
 
+    radixSort(myVector,binaryArray);
     /*
     std::vector<int> binary;
     numToBinary(10, binary);
