@@ -5,6 +5,20 @@
 
 using namespace std;
 
+void writeVectorToFile(const std::vector<int>& vec, const std::string& filename) {
+    std::ofstream outputFile(filename);
+
+    if(outputFile.is_open()){
+        for(int num:vec){
+            outputFile<<num<<" ";
+        }
+        outputFile.close();
+        std::cout<<"Zapisano v datoteko: "<<filename<<std::endl;
+    } else {
+        std::cerr<<"Napaka pri odpiranju: "<<filename<<std::endl;
+    }
+}
+
 void print2DArray(int rows, int cols, int (*binaryArray)[8]) {
     for (int i=0; i<rows; ++i) {
         for (int j=0; j<cols; ++j) {
@@ -108,10 +122,7 @@ int main(int argc, char* argv[]) {
     std::vector<int> binaryNumberVector(8,0);
     int binaryArray[size][8];
     fillBinaryVector(myVector,binaryArray,binaryNumberVector);
-    std::vector<int> sorted = radixSort(myVector,binaryArray);
-    for(auto el : sorted){
-        cout<<el<<",";
-    }
+    writeVectorToFile(radixSort(myVector,binaryArray),"out.txt");
 
 
     return 0;
