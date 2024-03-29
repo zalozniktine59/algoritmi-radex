@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 
 using namespace std;
 
@@ -87,28 +88,31 @@ std::vector<int> radixSort(std::vector<unsigned char>myVector, int (*binaryArray
     return decimalVector;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+
+    std::ifstream input_file(argv[1]);
+    if (!input_file) {
+        std::cerr << "Error opening input file." << std::endl;
+        return 1;
+    }
+    int size=0;
+    std::vector<int> numbers;
+    int num;
     std::vector<unsigned char> myVector;
-    myVector = {14,5,2,12};
-    int size=5;
-    int binaryArray[size][8];
+
+    while (input_file >> num) {
+        myVector.push_back(num);
+        size++;
+    }
+
     std::vector<int> binaryNumberVector(8,0);
+    int binaryArray[size][8];
     fillBinaryVector(myVector,binaryArray,binaryNumberVector);
-
     std::vector<int> sorted = radixSort(myVector,binaryArray);
-    for (int i=0; i<sorted.size(); i++) {
-        cout<<sorted[i]<<",";
+    for(auto el : sorted){
+        cout<<el<<",";
     }
-    /*
-    std::vector<int> binary;
-    numToBinary(10, binary);
-    for (int i=binary.size()-1; i>=0; i--) {
-        std::cout << binary[i];
-    }
-    cout<<endl;
 
-    int decimal = binaryToDecimal(&binary[0], binary.size());
-    cout<<"Decimalno stevilo: "<<decimal<<endl;
-     */
+
     return 0;
 }
