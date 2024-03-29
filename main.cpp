@@ -38,6 +38,10 @@ void fillBinaryVector(const std::vector<unsigned char>myVector, int (*binaryArra
     //print2DArray(myVector.size(),8,binaryArray);
 }
 
+std::vector<int> radixSort(std::vector<unsigned char>myVector, int (*binaryArray)[8]){
+
+}
+
 int main() {
     std::vector<unsigned char> myVector;
     myVector = {4,5,1,3,9};
