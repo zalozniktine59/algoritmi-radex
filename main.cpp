@@ -12,6 +12,13 @@ void numToBinary(int number, std::vector<int>& binaryNumberVector){
         number >>= 1;
     }
 }
+int binaryToDecimal(int binary[], int length) {
+    int decimal = 0;
+    for (int i=length-1; i>=0; i--) {
+        decimal= (decimal << 1) | binary[i];
+    }
+    return decimal;
+}
 
 int main() {
     std::vector<int> binary;
@@ -20,5 +27,8 @@ int main() {
         std::cout << binary[i];
     }
     cout<<endl;
+
+    int decimal = binaryToDecimal(&binary[0], binary.size());
+    cout<<"Decimalno stevilo: "<<decimal<<endl;
     return 0;
 }
