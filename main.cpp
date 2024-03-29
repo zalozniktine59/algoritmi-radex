@@ -41,10 +41,19 @@ void fillBinaryVector(const std::vector<unsigned char>myVector, int (*binaryArra
 std::vector<int> radixSort(std::vector<unsigned char>myVector, int (*binaryArray)[8]){
     int size = myVector.size();
     std::vector<std::pair<int, int>> vec;
+    std::vector<int> decimalVector;
+
+    int binaryArrayTemp[size][8];
+    //kopiram v temp
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            binaryArrayTemp[i][j] = binaryArray[i][j];
+        }
+    }
 
     for(int i=0;i<8;i++){
         for(int j=0;j<size;j++){
-            vec.push_back(std::make_pair(binaryArray[j][i],j));
+            vec.push_back(std::make_pair(binaryArrayTemp[j][i],j));
 
         }
         std::stable_sort(vec.begin(), vec.end(),
@@ -54,8 +63,13 @@ std::vector<int> radixSort(std::vector<unsigned char>myVector, int (*binaryArray
         print2DArray(size,8,binaryArray);
         cout<<endl;
         for(int o=0;o<size;o++) {
-            for (int p = 0; p < 8; p++) {
-                binaryArray[o][p] = binaryArray[vec[o].second][p];
+            for (int p=0; p<8; p++) {
+                binaryArrayTemp[o][p] = binaryArray[vec[o].second][p];
+            }
+        }
+        for (int l=0; l<size; l++) {
+            for (int j=0; j<8; j++) {
+                binaryArray[l][j] = binaryArrayTemp[l][j];
             }
         }
         vec.clear();
