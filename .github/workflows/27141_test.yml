@@ -23,13 +23,10 @@ jobs:
     steps:
       - name: Kompilacija in izvedba testov
         run: |
-          pwd
-          '''
           if [ -s "napaka.txt" ]; then
             echo "Napaka v prejšnjem poslu, testi se ne bodo izvedli."
             exit 1
           fi
-          g++ test.cpp main.cpp -o test_program
+          g++ ../test.cpp ../main.cpp -o test_program
           ./test_program
-          '''
         
