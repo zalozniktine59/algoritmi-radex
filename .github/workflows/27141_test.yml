@@ -32,8 +32,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: napaka
-          path: .
-      - uses: actions/checkout@v2
       - name: Preberi napaka.txt
         run: |
           napaka=$(<napaka.txt)
