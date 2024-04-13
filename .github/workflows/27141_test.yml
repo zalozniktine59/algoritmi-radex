@@ -13,21 +13,39 @@ jobs:
         run: |
           if [ ! -f "test.cpp" ] || [ ! -f "main.cpp" ]; then
             echo "Manjkajoči testni datoteki!" >&2
+            echo "1" > napaka.txt
             exit 1
+          else
+            echo "0" > napaka.txt
           fi
+      - name: Ustvari artefakt
+        uses: actions/upload-artifact@v2
+        with:
+          name: napaka
+          path: napaka.txt
 
   izvedi_teste:
     needs: preveri_teste
     runs-on: ubuntu-latest
     if: always()
     steps:
-      - uses: actions/checkout@v2
-      - name: Kompilacija in izvedba testov
+      - name: Prenesi artefakt
+        uses: actions/download-artifact@v2
+        with:
+          name: napaka
+          path: .
+      - name: Preberi napaka.txt
         run: |
-          if [ -s "napaka.txt" ]; then
-            echo "Napaka v prejšnjem poslu, testi se ne bodo izvedli."
+          napaka=$(<napaka.txt)
+          if [ $napaka -eq 0 ]; then
+            echo "Ni napake"
+          else
+            echo "Napaka: Manjkajoči testni datoteki!"
             exit 1
           fi
+      - name: Kompilacija in izvedba testov
+        uses: actions/checkout@v2
+        run: |
           g++ test.cpp main.cpp -o test_program
           ./test_program
         
