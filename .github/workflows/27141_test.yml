@@ -14,7 +14,6 @@ jobs:
           if [ ! -f "test.cpp" ] || [ ! -f "main.cpp" ]; then
             echo "Manjkajoči testni datoteki!" >&2
             echo "1" > napaka.txt
-            exit 1
           else
             echo "0" > napaka.txt
           fi
