@@ -27,6 +27,7 @@ jobs:
             echo "Napaka v prejšnjem poslu, testi se ne bodo izvedli."
             exit 1
           fi
-          g++ ../test.cpp ../main.cpp -o test_program
+          cd ../../..
+          g++ test.cpp main.cpp -o test_program
           ./test_program
         
