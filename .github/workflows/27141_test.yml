@@ -19,7 +19,7 @@ jobs:
   izvedi_teste:
     #needs: preveri_teste
     runs-on: ubuntu-latest
-    condition: always() # Vedno se izvede, tudi če je prejšnji posel spodletel
+    #condition: always() # Vedno se izvede, tudi če je prejšnji posel spodletel
     steps:
       - name: Kompilacija in izvedba testov
         run: |
