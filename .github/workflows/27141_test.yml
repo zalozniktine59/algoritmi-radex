@@ -34,6 +34,7 @@ jobs:
         with:
           name: napaka
           path: .
+      - uses: actions/checkout@v2
       - name: Preberi napaka.txt
         run: |
           napaka=$(<napaka.txt)
@@ -43,8 +44,9 @@ jobs:
             echo "Napaka: Manjkajoči testni datoteki!"
             exit 1
           fi
+      - uses: actions/checkout@v2
       - name: Kompilacija in izvedba testov
-        uses: actions/checkout@v2
+        
         run: |
           g++ test.cpp main.cpp -o test_program
           ./test_program
