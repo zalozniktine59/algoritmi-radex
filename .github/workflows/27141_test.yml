@@ -9,6 +9,7 @@ jobs:
     steps:
       - name: Preveri testne datoteke
         uses: actions/checkout@v2
+      - name: Preveri kodo
         run: |
           if [ ! -f "../../test.cpp" ] || [ ! -f "../../main.cpp" ]; then
             echo "Manjkajoči testni datoteki!" >&2
@@ -33,5 +34,4 @@ jobs:
           cd ../../
           g++ test.cpp main.cpp -o test_program
           ./test_program
-        uses: actions/checkout@v2
         
