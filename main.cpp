@@ -101,29 +101,33 @@ std::vector<int> radixSort(std::vector<unsigned char>myVector, int (*binaryArray
 
     return decimalVector;
 }
-
+/*
 int main(int argc, char* argv[]) {
+
 
     std::ifstream input_file(argv[1]);
     if (!input_file) {
         std::cerr << "Error opening input file." << std::endl;
         return 1;
     }
+
     int size=0;
+    std::vector<unsigned char> myVector;
+
     std::vector<int> numbers;
     int num;
-    std::vector<unsigned char> myVector;
 
     while (input_file >> num) {
         myVector.push_back(num);
         size++;
     }
-
+    
     std::vector<int> binaryNumberVector(8,0);
     int binaryArray[size][8];
     fillBinaryVector(myVector,binaryArray,binaryNumberVector);
     writeVectorToFile(radixSort(myVector,binaryArray),"out.txt");
 
-
     return 0;
+
 }
+*/
