@@ -1,9 +1,10 @@
 name: Deploy docker
 
-workflow_run:
-  workflows: ["27141_test"]
-  types:
-    - completed
+on:
+  workflow_run:
+    workflows: ["27141_test"]
+    types:
+      - completed
 
 jobs:
   deploy_to_dockerhub:
