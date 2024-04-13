@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Preveri kodo
         run: |
-          if [ ! -f "../../test.cpp" ] || [ ! -f "../../main.cpp" ]; then
+          if [ ! -f "test.cpp" ] || [ ! -f "main.cpp" ]; then
             echo "Manjkajoči testni datoteki!" >&2
             exit 1
           fi
