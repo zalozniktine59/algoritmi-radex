@@ -1,3 +1,4 @@
+runs-on: [self-hosted, linux, x64]
 on:
   push:
     branches:
@@ -11,13 +12,13 @@ jobs:
         uses: actions/checkout@v2
       - name: Preveri kodo
         run: |
-          if [ ! -f "test.cpp" ] || [ ! -f "main.cpp" ]; then
+          if [ ! -f "test.cpp" ] || [ ! -f "main.cpp" ]; then #preverim ce obstajata testni datoteki
             echo "Manjkajoči testni datoteki!" >&2
-            echo "1" > napaka.txt
+            echo "1" > napaka.txt #ce manjkata, v file dam 0
           else
-            echo "0" > napaka.txt
+            echo "0" > napaka.txt #ce obstajata, v file dam 1
           fi
-      - name: Ustvari artefakt
+      - name: Ustvari artefakt #ustvarim artefakt
         uses: actions/upload-artifact@v2
         with:
           name: napaka
@@ -26,7 +27,7 @@ jobs:
   izvedi_teste:
     needs: preveri_teste
     runs-on: ubuntu-latest
-    if: always()
+    if: always() #v vsakem primeru se izvede ne glede na preveri_teste
     steps:
       - name: Prenesi artefakt
         uses: actions/download-artifact@v2
@@ -34,7 +35,7 @@ jobs:
           name: napaka
       - name: Preberi napaka.txt
         run: |
-          napaka=$(<napaka.txt)
+          napaka=$(<napaka.txt) #preberem ce je napaka v .txt
           if [ $napaka -eq 0 ]; then
             echo "Ni napake"
           else

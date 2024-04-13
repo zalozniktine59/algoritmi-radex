@@ -1,0 +1,6 @@
+name: Deploy docker
+on:
+  workflow_run:
+    workflows: ["27141_test"]
+    types:
+      - completed
