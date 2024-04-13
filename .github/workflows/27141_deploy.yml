@@ -8,7 +8,10 @@ on:
 
 jobs:
   deploy_to_dockerhub:
-    runs-on: [self-hosted, linux, x64]
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout repository
@@ -16,7 +19,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t zalozniktine/radex:latest .
+          sudo docker build -t zalozniktine/radex:latest .
       
       - name: Login to DockerHub
         uses: docker/login-action@v2
@@ -26,4 +29,4 @@ jobs:
       
       - name: Push Docker image to DockerHub
         run: |
-          docker push zalozniktine/radex:latest
+          sudo docker push zalozniktine/radex:latest
