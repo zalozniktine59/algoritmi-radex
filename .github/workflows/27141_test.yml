@@ -21,13 +21,13 @@ jobs:
     runs-on: ubuntu-latest
     #condition: always() # Vedno se izvede, tudi če je prejšnji posel spodletel
     steps:
+      - uses: actions/checkout@v2
       - name: Kompilacija in izvedba testov
         run: |
           if [ -s "napaka.txt" ]; then
             echo "Napaka v prejšnjem poslu, testi se ne bodo izvedli."
             exit 1
           fi
-          cd ../../..
           g++ test.cpp main.cpp -o test_program
           ./test_program
         
