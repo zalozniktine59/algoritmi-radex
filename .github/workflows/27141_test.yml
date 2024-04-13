@@ -14,7 +14,6 @@ jobs:
             echo "Manjkajoči testni datoteki!" >&2
             exit 1
           fi
-      
         artifact:
           name: napaka
           paths:
