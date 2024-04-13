@@ -23,6 +23,7 @@ jobs:
     steps:
       - name: Kompilacija in izvedba testov
         run: |
+          ls
           if [ -s "napaka.txt" ]; then
             echo "Napaka v prejšnjem poslu, testi se ne bodo izvedli."
             exit 1
