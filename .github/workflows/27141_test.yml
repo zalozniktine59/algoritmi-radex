@@ -9,12 +9,12 @@ jobs:
     steps:
       - name: Preveri testne datoteke
         uses: actions/checkout@v2
-        script: |
+        run: |
           if [ ! -f "../../test.cpp" ] || [ ! -f "../../main.cpp" ]; then
             echo "Manjkajoči testni datoteki!" >&2
             exit 1
           fi
-      - name: Preveri kodo
+      
         artifact:
           name: napaka
           paths:
@@ -26,8 +26,7 @@ jobs:
     condition: always() # Vedno se izvede, tudi če je prejšnji posel spodletel
     steps:
       - name: Kompilacija in izvedba testov
-        uses: actions/checkout@v2
-        script: |
+        run: |
           if [ -s "napaka.txt" ]; then
             echo "Napaka v prejšnjem poslu, testi se ne bodo izvedli."
             exit 1
@@ -35,4 +34,5 @@ jobs:
           cd ../../
           g++ test.cpp main.cpp -o test_program
           ./test_program
+        uses: actions/checkout@v2
         
