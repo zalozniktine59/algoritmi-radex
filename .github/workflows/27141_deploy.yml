@@ -2,7 +2,7 @@ name: Deploy docker
 
 on:
   workflow_run:
-    workflows: ["27141_test"]
+    workflows: ["test"]
     types:
       - completed
 
