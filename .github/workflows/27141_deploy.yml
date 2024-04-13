@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy_to_dockerhub:
-    runs-on: self-hosted
+    runs-on: [self-hosted, linux, x64]
     strategy:
       matrix: 
         os: [ubuntu-latest]
