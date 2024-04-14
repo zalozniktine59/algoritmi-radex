@@ -1,16 +1,11 @@
-# Uporabi Ubuntu kot osnovno sliko
+#uporabi ubuntu
 FROM ubuntu:latest
 
-# Nastavi delovno mapo v Docker zabojniku
+#uporabi /app kot delovni direktorij v docker zabojniku
 WORKDIR /app
 
-# Kopiraj vse datoteke iz trenutnega direktorija v Docker zabojnik v /app
+#kopira vse datoteke v trenutni mapi v /app v docker zabojniku
 COPY . /app
 
-# Posodobi seznam paketov in namesti potrebne odvisnosti
-RUN apt-get update && \
-    apt-get install -y g++ && \
-    rm -rf /var/lib/apt/lists/*
-
-# Ko Docker zabojnik zažene, skompiliraj in zaženi testni program
+#ko se docker zabojnik zažene, zbuilda program in ga zažene
 CMD g++ test.cpp main.cpp -o test_program && ./test_program

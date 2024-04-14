@@ -1,5 +1,6 @@
-name: Deploy docker
+name: deploy
 
+#izvede se, ko se zakljuci workflow test
 on:
   workflow_run:
     workflows: ["test"]
@@ -9,6 +10,7 @@ on:
 jobs:
   deploy_to_dockerhub:
     runs-on: [self-hosted, linux, x64]
+    #izvede se samo ce je job ki je pognal ta workflow uspesno zakljucen
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout repository
@@ -16,7 +18,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          sudo docker build -t zalozniktine/radex:latest .
+          sudo docker build -t zalozniktine/radex:latest . #. pomeni da je v trenutnem direkoriju dockerfile
       
       - name: Login to DockerHub
         uses: docker/login-action@v2
