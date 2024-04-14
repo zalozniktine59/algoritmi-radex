@@ -1,55 +1,71 @@
+#ime skritpe
 name: test
 
+#izvede se, ko se pusha na master ali main branch
 on:
   push:
     branches:
       - master
       - main
 
+#definiramo 2 jobsa
 jobs:
+  #preveri_teste job, ki preveri ce obstajata testni datoteki
   preveri_teste:
+    #doloci da poganjam na svoje runnerju
     runs-on: [self-hosted, linux, x64]
+    #koraki prvega joba
     steps:
+      #- name: Preveri testne datoteke
+      #uporabim checkout da dobim dostop do datotek
+      - uses: actions/checkout@v2
       - name: Preveri testne datoteke
-        uses: actions/checkout@v2
-      - name: Preveri kodo
         run: |
           if [ ! -f "test.cpp" ] || [ ! -f "main.cpp" ]; then #preverim ce obstajata testni datoteki
-            echo "Manjkajoči testni datoteki!" >&2
-            echo "1" > napaka.txt #ce manjkata, v file dam 0
+            echo "Manjkajoči testni datoteki!" >&2 2> napaka.txt
+            #zapisem standardno napako v napaka.txt ce manjkata datoteki
+            #echo "1" > napaka.txt
           else
-            echo "0" > napaka.txt #ce obstajata, v file dam 1
+            #zapisem 0 v napaka.txt ce obstajata datoteki
+            echo "0" > napaka.txt
           fi
-      - name: Ustvari artefakt #ustvarim artefakt
+      #ustvarim artefakt napaka
+      - name: Ustvari artefakt
         uses: actions/upload-artifact@v2
         with:
           name: napaka
           path: napaka.txt
 
+  #izvedi_teste job, ki prenese artefakt in izvede teste
   izvedi_teste:
+    #izvede sele po preveri_teste
     needs: preveri_teste
-    runs-on: ${{ matrix.os }}
+    runs-on: [self-hosted, linux, x64]
     strategy:
       matrix:
+        #matrika, ki testira z g++ in clang++
         os: [self-hosted]
         compiler: [g++, clang++]
     if: always() #v vsakem primeru se izvede ne glede na preveri_teste
     steps:
+        #prenese artefakt napaka
       - name: Prenesi artefakt
         uses: actions/download-artifact@v2
         with:
           name: napaka
       - name: Preberi napaka.txt
         run: |
-          napaka=$(<napaka.txt) #preberem ce je napaka v .txt
+          napaka=$(<napaka.txt) #preberem napaka.txt
           if [ $napaka -eq 0 ]; then
             echo "Ni napake"
           else
-            echo "Napaka: Manjkajoči testni datoteki!"
+            echo "Napaka: $(cat napaka.txt)" # prikazem napako
             exit 1
           fi
+          #dostop do datotek omogoči checkout
       - uses: actions/checkout@v2
       - name: Kompilacija in izvedba testov
+        #zbuilda in izvede testne datoteke, uporabi vse compilerje iz matrike
         run: |
           ${{ matrix.compiler }} test.cpp main.cpp -o test_program #uporabi matrix compiler
           ./test_program
