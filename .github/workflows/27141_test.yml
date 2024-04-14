@@ -1,4 +1,4 @@
-name: test
+name: Deploy docker
 
 on:
   push:
@@ -28,7 +28,11 @@ jobs:
 
   izvedi_teste:
     needs: preveri_teste
-    runs-on: [self-hosted, linux, x64]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        compiler: [g++, clang++, cl]
     if: always() #v vsakem primeru se izvede ne glede na preveri_teste
     steps:
       - name: Prenesi artefakt
@@ -46,8 +50,7 @@ jobs:
           fi
       - uses: actions/checkout@v2
       - name: Kompilacija in izvedba testov
-        
         run: |
-          g++ test.cpp main.cpp -o test_program
+          ${{ matrix.compiler }} test.cpp main.cpp -o test_program #uporabi matrix compiler
           ./test_program
         
